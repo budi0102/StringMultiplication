@@ -79,20 +79,35 @@ namespace StringMultiplication
 
             foreach (char c in a)
             {
-                try
-                {
-                    ht.Add(c, 1);
-                }
-                catch (System.ArgumentException)
-                {
-                    // ignore the exception thrown if you are adding same key twice
-                }
+                if (!ht.ContainsKey(c))
+                    ht.Add(c, true);
 
+                // the methods below takes longer time.
+                //try
+                //{
+                //    ht.Add(c, true);
+                //}
+                //catch (System.ArgumentException)
+                //{
+                    // ignore the exception thrown if you are adding same key twice
+                //}
+            
             }
             foreach (char c in b)
             {
                 if (ht.ContainsKey(c))
                     return true;
+
+                // the methods below takes longer time.
+                //try
+                //{
+                //    ht.Add(c, true);
+                //}
+                //catch (System.ArgumentException)
+                //{
+                    // collision detected
+                //    return true;
+                //}
             }
 
             return false;
