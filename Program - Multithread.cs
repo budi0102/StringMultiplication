@@ -28,7 +28,7 @@ namespace StringMultiplication
                 T[i].Start();
             }
 
-            Thread.Sleep(20000);
+            Thread.Sleep(4000);
             //for (int i = numberOfComputation-1; i >= 0; i--)
             //{  
             //    T[i].Join();
