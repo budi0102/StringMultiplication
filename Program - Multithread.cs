@@ -14,13 +14,13 @@ namespace StringMultiplication
         {
             int numberOfComputation = 4;
             Thread[] T = new Thread[numberOfComputation];
-            T[0] = new Thread(() => ComputeList(ref Data));
+            T[0] = new Thread(() => ComputeList(ref Data)); 
             T[0].Name = "Compute List of Strings 1";
             T[1] = new Thread(() => ComputeList(ref Data2));
             T[1].Name = "Compute List of Strings 2";
             T[2] = new Thread(() => ComputeArray(ref Data3));
             T[2].Name = "Compute Array of Strings 3";
-            T[3] = new Thread(() => ComputeListMultiTask(Data3));
+            T[3] = new Thread(() => ComputeArrayMultiTask(Data3));
             T[3].Name = "Compute Array of Strings with multitask";
 
             for (int i = numberOfComputation-1; i >= 0;i-- )
@@ -83,6 +83,7 @@ namespace StringMultiplication
         public static void ComputeList(ref List<string> strlist)
         {
             DateTime start = DateTime.Now;
+            StringBuilder sb = new StringBuilder();
             if (strlist == null || strlist.Count <= 0)
             {
                 return;
@@ -95,10 +96,12 @@ namespace StringMultiplication
                 {
                     result = Compute(strlist[i], strlist[j]);
                     //Console.WriteLine("{0}:<{1}> * {2}:<{3}> = {4}", i, strlist[i], j, strlist[j], result);
+                    sb.AppendFormat("{0}:<{1}> * {2}:<{3}> = {4}{5}", i, strlist[i], j, strlist[j], result, Environment.NewLine);
                 }
             }
 
             TimeSpan ts = DateTime.Now - start;
+            //Console.WriteLine(sb);
             Console.WriteLine("Current thread is {0}", Thread.CurrentThread.Name);
             Console.WriteLine("Timespan is {0}ms", ts.TotalMilliseconds);
         }
@@ -181,7 +184,7 @@ namespace StringMultiplication
         /// Multitask/threading method
         /// </summary>
         /// <param name="strlist">array of strings</param>
-        public static void ComputeListMultiTask(string[] strlist)
+        public static void ComputeArrayMultiTask(string[] strlist)
         {
             DateTime start = DateTime.Now;
             StringBuilder sb = new StringBuilder();
@@ -218,14 +221,14 @@ namespace StringMultiplication
             {
                 lock (sb)
                 {
-                    //sb.AppendFormat("<{0}> * <{1}> = {2}{3}", a, b, 0, Environment.NewLine);
+                    sb.AppendFormat("<{0}> * <{1}> = {2}{3}", a, b, 0, Environment.NewLine);
                 }
             }
             else
             {
                 lock (sb)
                 {
-                    //sb.AppendFormat("<{0}> * <{1}> = {2}{3}", a, b, a.Length * b.Length, Environment.NewLine);
+                    sb.AppendFormat("<{0}> * <{1}> = {2}{3}", a, b, a.Length * b.Length, Environment.NewLine);
                 }
             }
 
